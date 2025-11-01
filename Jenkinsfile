@@ -9,7 +9,7 @@ pipeline {
                 echo 'PFV'
             }
         }
-    /*
+    
         stage('Build'){
 
             steps {
@@ -25,7 +25,7 @@ pipeline {
 
             }
         }
-    */    
+       
     }
     
 }
