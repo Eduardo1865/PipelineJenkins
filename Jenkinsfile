@@ -4,6 +4,12 @@ pipeline {
 
     stages {
 
+        stage("POR FAVOR FUNCIONA"){
+            steps{
+                echo 'PFV'
+            }
+        }
+    /*
         stage('Build'){
 
             steps {
@@ -21,4 +27,5 @@ pipeline {
         }
         
     }
+    */
 }
