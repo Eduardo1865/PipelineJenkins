@@ -14,10 +14,10 @@ pipeline {
 
             steps {
                 echo 'Building...'
-                sh "python --version"
-                sh "pip --version"
+                sh "python3 --version"
+                sh "pip3 --version"
                 sh '''
-                   python -m venv venv
+                   python3 -m venv venv
                    . venv/bin/activate
                    pip install -r requirements.txt
                    ls
