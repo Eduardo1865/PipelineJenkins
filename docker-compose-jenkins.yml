@@ -1,0 +1,17 @@
+
+version: '3.8'
+services:
+  jenkins_python:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    container_name: jenkins_python
+    privileged: true
+    user: root
+    ports:
+     - 8080:8080
+     - 50000:50000
+    volumes:
+      - ./jenkins_compose/jenkins_configuration:/var/jenkins_home
+      - ./:/workspace
+    restart: always
