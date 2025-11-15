@@ -25,6 +25,15 @@ pipeline {
 
             }
         }
+
+        stage('Teste'){
+
+            steps {
+                echo 'Testando'
+                sh "pytest teste.py"
+                
+            }
+        }
        
     }
     
