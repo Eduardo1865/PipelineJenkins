@@ -30,8 +30,10 @@ pipeline {
 
             steps {
                 echo 'Testando'
-                sh ". venv/bin/activate"
-                sh "pytest teste.py"
+                sh '''
+                   . venv/bin/activate
+                   pytest teste.py -v
+                '''
                 
             }
         }
