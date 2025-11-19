@@ -15,3 +15,41 @@ services:
       - ./jenkins_compose/jenkins_configuration:/var/jenkins_home
       - ./:/workspace
     restart: always
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: appdb
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_cache
+    ports:
+      - 6379:6379
+    restart: always
+
+  webapp:
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile
+    container_name: webapp
+    ports:
+      - 5000:5000
+    environment:
+      - DATABASE_URL=postgresql://admin:admin123@postgres:5432/appdb
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    restart: always
+
+volumes:
+  postgres_data:

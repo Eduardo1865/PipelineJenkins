@@ -37,6 +37,18 @@ pipeline {
                 
             }
         }
+
+        stage('Testar WebApp'){
+
+            steps {
+                echo 'Testando conexão com WebApp, PostgreSQL e Redis...'
+                sh '''
+                   curl -f http://webapp:5000/health || exit 1
+                   echo "✅ WebApp respondendo!"
+                '''
+                
+            }
+        }
        
     }
     
