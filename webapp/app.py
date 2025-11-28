@@ -33,57 +33,6 @@ def init_db():
     cur.close()
     conn.close()
 
-@app.route('/')
-def home():
-    """Página inicial"""
-    # Incrementa contador no Redis
-    visitas = r.incr('total_visitas')
-    
-    return jsonify({
-        'mensagem': 'Bem-vindo à aplicação web!',
-        'total_visitas': visitas,
-        'timestamp': datetime.now().isoformat()
-    })
-
-@app.route('/visitantes', methods=['GET'])
-def listar_visitantes():
-    """Lista todos os visitantes do banco"""
-    conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute('SELECT id, nome, data_visita FROM visitantes ORDER BY data_visita DESC')
-    visitantes = cur.fetchall()
-    cur.close()
-    conn.close()
-    
-    return jsonify({
-        'visitantes': [
-            {'id': v[0], 'nome': v[1], 'data': v[2].isoformat()}
-            for v in visitantes
-        ]
-    })
-
-@app.route('/visitantes', methods=['POST'])
-def adicionar_visitante():
-    """Adiciona um visitante no banco"""
-    nome = request.json.get('nome')
-    
-    if not nome:
-        return jsonify({'erro': 'Nome é obrigatório'}), 400
-    
-    conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute('INSERT INTO visitantes (nome) VALUES (%s) RETURNING id', (nome,))
-    visitante_id = cur.fetchone()[0]
-    conn.commit()
-    cur.close()
-    conn.close()
-    
-    return jsonify({
-        'mensagem': 'Visitante adicionado!',
-        'id': visitante_id,
-        'nome': nome
-    }), 201
-
 @app.route('/health')
 def health():
     """Verifica saúde da aplicação"""

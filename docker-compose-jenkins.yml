@@ -2,9 +2,7 @@
 version: '3.8'
 services:
   jenkins_python:
-    build:
-      context: ./docker
-      dockerfile: Dockerfile
+    image: eduardo1865/jenkins-python-custom
     container_name: jenkins_python
     privileged: true
     user: root
