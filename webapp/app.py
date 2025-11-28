@@ -14,12 +14,10 @@ REDIS_URL = os.getenv('REDIS_URL', 'redis://redis:6379')
 r = redis.from_url(REDIS_URL, decode_responses=True)
 
 def get_db_connection():
-    """Cria conexão com PostgreSQL"""
     conn = psycopg2.connect(DATABASE_URL)
     return conn
 
 def init_db():
-    """Inicializa o banco de dados"""
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute('''
@@ -35,7 +33,6 @@ def init_db():
 
 @app.route('/health')
 def health():
-    """Verifica saúde da aplicação"""
     try:
         # Testa PostgreSQL
         conn = get_db_connection()
